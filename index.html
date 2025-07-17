@@ -1,4 +1,781 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #3a3a3a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-accent: #64b5f6;
+            --accent: #42a5f5;
+            --accent-hover: #2196f3;
+            --border: #404040;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        .light-mode {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #555555;
+            --text-accent: #2196f3;
+            --accent: #2196f3;
+            --accent-hover: #1976d2;
+            --border: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .main-content {
+            display: block;
+            margin-top: 60px;
+        }
+
+        .sidebar {
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .content {
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section h2 {
+            color: var(--text-accent);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .contact-info {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .contact-item:hover {
+            background: var(--bg-secondary);
+            transform: translateX(5px);
+            color: var(--text-primary);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .contact-item a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            color: var(--text-accent);
+        }
+
+        .tech-stack {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .tech-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .tech-category {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tech-category-title {
+            font-weight: 600;
+            color: var(--text-accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tech-tag {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .experience-item {
+            background: var(--bg-tertiary);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .company {
+            color: var(--text-accent);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .duration {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: var(--bg-secondary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .achievements {
+            margin-top: 20px;
+        }
+
+        .achievements h4 {
+            color: var(--text-accent);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .achievement-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .achievement-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .achievement-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        .project-card {
+            background: var(--bg-tertiary);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--accent);
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .project-status {
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .project-tech-tag {
+            background: var(--bg-secondary);
+            color: var(--text-accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .project-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .project-detail-section {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .project-detail-section h5 {
+            color: var(--text-accent);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .project-link {
+            background: var(--accent);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .certificates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .certificate-item {
+            background: var(--bg-tertiary);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .certificate-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .certificate-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .certificate-issuer {
+            color: var(--text-accent);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .certificate-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .certificate-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .job-header,
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .project-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .certificates {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    
+    <div class="container">
+        <div class="main-content">
+            <main class="content">
+                <div class="section">
+                    <h2>Professional Experience</h2>
+                    
+                    <div class="experience-item">
+                        <div class="job-header">
+                            <div>
+                                <div class="job-title">Senior Full Stack Developer</div>
+                                <div class="company">Tech Solutions Inc.</div>
+                            </div>
+                            <div class="duration">Jan 2022 - Present</div>
+                        </div>
+                        <div class="description">
+                            Led the development and architecture of a comprehensive customer management system serving over 10,000 active users. Implemented microservices architecture using Node.js and React, focusing on scalability and performance optimization.
+                        </div>
+                        <div class="achievements">
+                            <h4>Key Achievements & Responsibilities:</h4>
+                            <ul class="achievement-list">
+                                <li>Architected and implemented microservices infrastructure, reducing system response time by 40%</li>
+                                <li>Mentored a team of 4 junior developers, establishing code review processes and best practices</li>
+                                <li>Integrated third-party APIs (Stripe, SendGrid, AWS S3) to enhance system functionality</li>
+                                <li>Implemented automated testing pipeline with 90% code coverage using Jest and Cypress</li>
+                                <li>Designed and developed real-time notification system using WebSockets and Redis</li>
+                                <li>Collaborated with product managers to define technical requirements and delivery timelines</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="job-header">
+                            <div>
+                                <div class="job-title">Frontend Developer</div>
+                                <div class="company">Creative Digital Agency</div>
+                            </div>
+                            <div class="duration">Mar 2020 - Dec 2021</div>
+                        </div>
+                        <div class="description">
+                            Developed responsive web applications for high-profile clients using modern frontend technologies. Focused on creating pixel-perfect implementations and optimizing user experience across all devices.
+                        </div>
+                        <div class="achievements">
+                            <h4>Key Achievements & Responsibilities:</h4>
+                            <ul class="achievement-list">
+                                <li>Delivered 15+ client projects with 100% on-time completion rate</li>
+                                <li>Improved average page load times by 60% through optimization techniques</li>
+                                <li>Collaborated closely with UI/UX designers to implement complex animations and interactions</li>
+                                <li>Developed reusable component library reducing development time by 30%</li>
+                                <li>Implemented accessibility standards (WCAG 2.1) across all projects</li>
+                                <li>Led migration from jQuery to React for legacy client applications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Featured Projects</h2>
+                    
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <div class="project-title">Enterprise E-Commerce Platform</div>
+                            </div>
+                            <div class="project-status">Production</div>
+                        </div>
+                        <div class="project-tech">
+                            <span class="project-tech-tag">React</span>
+                            <span class="project-tech-tag">Node.js</span>
+                            <span class="project-tech-tag">PostgreSQL</span>
+                            <span class="project-tech-tag">Redis</span>
+                            <span class="project-tech-tag">AWS</span>
+                            <span class="project-tech-tag">Docker</span>
+                        </div>
+                        <div class="project-description">
+                            Full-featured e-commerce platform built for enterprise clients, handling high-volume transactions and supporting multi-tenant architecture. The system processes over $2M in monthly transactions and supports 1000+ concurrent users.
+                        </div>
+                        <div class="project-details">
+                            <div class="project-detail-section">
+                                <h5>Technical Implementation</h5>
+                                <ul class="achievement-list">
+                                    <li>Microservices architecture with 12 independent services</li>
+                                    <li>Real-time inventory management with Redis caching</li>
+                                    <li>Payment processing with Stripe and PayPal integration</li>
+                                    <li>Advanced search with Elasticsearch</li>
+                                    <li>Automated CI/CD pipeline with GitHub Actions</li>
+                                </ul>
+                            </div>
+                            <div class="project-detail-section">
+                                <h5>Key Features</h5>
+                                <ul class="achievement-list">
+                                    <li>Multi-vendor marketplace functionality</li>
+                                    <li>Advanced analytics dashboard</li>
+                                    <li>Mobile-first responsive design</li>
+                                    <li>Multi-language and multi-currency support</li>
+                                    <li>Automated email marketing integration</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Live Demo</a>
+                            <a href="#" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <div class="project-title">Real-time Collaboration Platform</div>
+                            </div>
+                            <div class="project-status">Beta</div>
+                        </div>
+                        <div class="project-tech">
+                            <span class="project-tech-tag">Vue.js</span>
+                            <span class="project-tech-tag">Socket.io</span>
+                            <span class="project-tech-tag">MongoDB</span>
+                            <span class="project-tech-tag">Express.js</span>
+                            <span class="project-tech-tag">WebRTC</span>
+                        </div>
+                        <div class="project-description">
+                            A comprehensive team collaboration platform featuring real-time document editing, video conferencing, and project management tools. Built to compete with platforms like Slack and Microsoft Teams.
+                        </div>
+                        <div class="project-details">
+                            <div class="project-detail-section">
+                                <h5>Real-time Features</h5>
+                                <ul class="achievement-list">
+                                    <li>Collaborative document editing with OT (Operational Transform)</li>
+                                    <li>Video/audio conferencing with WebRTC</li>
+                                    <li>Real-time chat with message history</li>
+                                    <li>Live cursor tracking and user presence</li>
+                                    <li>Instant notifications and alerts</li>
+                                </ul>
+                            </div>
+                            <div class="project-detail-section">
+                                <h5>Technical Challenges</h5>
+                                <ul class="achievement-list">
+                                    <li>Handling 500+ concurrent WebSocket connections</li>
+                                    <li>Implementing conflict resolution for document editing</li>
+                                    <li>Optimizing video streaming performance</li>
+                                    <li>Building scalable notification system</li>
+                                    <li>Ensuring data consistency across multiple servers</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Live Demo</a>
+                            <a href="#" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <div class="project-title">AI-Powered Data Analytics Dashboard</div>
+                            </div>
+                            <div class="project-status">In Development</div>
+                        </div>
+                        <div class="project-tech">
+                            <span class="project-tech-tag">React</span>
+                            <span class="project-tech-tag">D3.js</span>
+                            <span class="project-tech-tag">Python</span>
+                            <span class="project-tech-tag">TensorFlow</span>
+                            <span class="project-tech-tag">FastAPI</span>
+                        </div>
+                        <div class="project-description">
+                            Advanced analytics platform that leverages machine learning to provide predictive insights and automated reporting. Features custom visualizations and AI-driven recommendations for business intelligence.
+                        </div>
+                        <div class="project-details">
+                            <div class="project-detail-section">
+                                <h5>AI/ML Features</h5>
+                                <ul class="achievement-list">
+                                    <li>Predictive analytics with time series forecasting</li>
+                                    <li>Anomaly detection in real-time data streams</li>
+                                    <li>Natural language query processing</li>
+                                    <li>Automated report generation</li>
+                                    <li>Custom recommendation engine</li>
+                                </ul>
+                            </div>
+                            <div class="project-detail-section">
+                                <h5>Data Visualization</h5>
+                                <ul class="achievement-list">
+                                    <li>Interactive 3D data visualizations</li>
+                                    <li>Real-time updating charts and graphs</li>
+                                    <li>Custom dashboard builder</li>
+                                    <li>Export capabilities (PDF, Excel, CSV)</li>
+                                    <li>Mobile-responsive design</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Demo Video</a>
+                            <a href="#" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Certifications</h2>
+                    <div class="certificates">
+                        <div class="certificate-item">
+                            <div class="certificate-name">AWS Certified Solutions Architect</div>
+                            <div class="certificate-issuer">Amazon Web Services</div>
+                            <div class="certificate-date">Valid: March 2023 - March 2026</div>
+                            <div class="certificate-description">
+                                Comprehensive certification covering cloud architecture, security, and optimization. Demonstrates ability to design distributed systems on AWS.
+                            </div>
+                        </div>
+                        <div class="certificate-item">
+                            <div class="certificate-name">Google Cloud Professional Developer</div>
+                            <div class="certificate-issuer">Google Cloud Platform</div>
+                            <div class="certificate-date">Valid: January 2023 - January 2025</div>
+                            <div class="certificate-description">
+                                Advanced certification in cloud application development, focusing on scalable and secure cloud solutions.
+                            </div>
+                        </div>
+                        <div class="certificate-item">
+                            <div class="certificate-name">Certified Kubernetes Administrator (CKA)</div>
+                            <div class="certificate-issuer">Cloud Native Computing Foundation</div>
+                            <div class="certificate-date">Valid: September 2022 - September 2025</div>
+                            <div class="certificate-description">
+                                Hands-on certification demonstrating skills in Kubernetes cluster administration, troubleshooting, and management.
+                            </div>
+                        </div>
+                        <div class="certificate-item">
+                            <div class="certificate-name">MongoDB Certified Developer</div>
+                            <div class="certificate-issuer">MongoDB Inc.</div>
+                            <div class="certificate-date">Valid: November 2022 - November 2025</div>
+                            <div class="certificate-description">
+                                Certification in MongoDB database design, development, and optimization for high-performance applications.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h2>Tech Stack</h2>
+                    <div class="certificates">
+                        <div class="certificate-item">
+                            <div class="certificate-name">Frontend Development</div>
+                            <div class="certificate-issuer">Core Technologies</div>
+                            <div class="certificate-description">
+                                React, Vue.js, TypeScript, Next.js, Tailwind CSS, HTML5, CSS3, JavaScript ES6+
+                            </div>
+                        </div>
+                        <div class="certificate-item">
+                            <div class="certificate-name">Backend Development</div>
+                            <div class="certificate-issuer">Server Technologies</div>
+                            <div class="certificate-description">
+                                Node.js, Python, Express.js, FastAPI, RESTful APIs, GraphQL, WebSocket
+                            </div>
+                        </div>
+                        <div class="certificate-item">
+                            <div class="certificate-name">Database & Storage</div>
+                            <div class="certificate-issuer">Data Management</div>
+                            <div class="certificate-description">
+                                PostgreSQL, MongoDB, Redis, MySQL, Elasticsearch, AWS S3, Database Design
+                            </div>
+                        </div>
+                        <div class="certificate-item">
+                            <div class="certificate-name">DevOps & Cloud</div>
+                            <div class="certificate-issuer">Infrastructure</div>
+                            <div class="certificate-description">
+                                Docker, Kubernetes, AWS, Google Cloud, CI/CD, GitHub Actions, Terraform
+                            </div>
+                        </div>
+                        <div class="certificate-item">
+                            <div class="certificate-name">Tools & Methodologies</div>
+                            <div class="certificate-issuer">Development Practices</div>
+                            <div class="certificate-description">
+                                Git, Agile/Scrum, TDD, Jest, Cypress, Webpack, ESLint, Prettier
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const toggle = document.querySelector('.theme-toggle');
+            
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                toggle.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                toggle.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const toggle = document.querySelector('.theme-toggle');
+            
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                toggle.textContent = '🌙';
+            } else {
+                toggle.textContent = '☀️';
+            }
+        });
+    </script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
@@ -136,3 +913,4 @@
   </div>
 </body>
 </html>
+ -->
