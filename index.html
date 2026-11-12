@@ -1,888 +1,612 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
-            --bg-tertiary: #3a3a3a;
-            --text-primary: #e0e0e0;
-            --text-secondary: #b0b0b0;
-            --text-accent: #64b5f6;
-            --accent: #42a5f5;
-            --accent-hover: #2196f3;
-            --border: #404040;
-            --shadow: rgba(0, 0, 0, 0.3);
-        }
-
-        .light-mode {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --bg-tertiary: #ffffff;
-            --text-primary: #2c3e50;
-            --text-secondary: #555555;
-            --text-accent: #2196f3;
-            --accent: #2196f3;
-            --accent-hover: #1976d2;
-            --border: #e0e0e0;
-            --shadow: rgba(0, 0, 0, 0.1);
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-primary);
-            background: var(--bg-primary);
-            min-height: 100vh;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--bg-secondary);
-            border: 2px solid var(--border);
-            border-radius: 50px;
-            padding: 8px 16px;
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            color: var(--text-primary);
-            font-size: 16px;
-        }
-
-        .theme-toggle:hover {
-            background: var(--bg-tertiary);
-            transform: scale(1.05);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .main-content {
-            display: block;
-            margin-top: 60px;
-        }
-
-        .sidebar {
-            background: var(--bg-secondary);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            height: fit-content;
-            position: sticky;
-            top: 20px;
-        }
-
-        .content {
-            background: var(--bg-secondary);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-        }
-
-        .section {
-            margin-bottom: 40px;
-        }
-
-        .section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section h2 {
-            color: var(--text-accent);
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        .contact-info {
-            background: var(--bg-tertiary);
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border: 1px solid var(--border);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            color: var(--text-secondary);
-        }
-
-        .contact-item:hover {
-            background: var(--bg-secondary);
-            transform: translateX(5px);
-            color: var(--text-primary);
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .contact-item a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .contact-item a:hover {
-            color: var(--text-accent);
-        }
-
-        .tech-stack {
-            background: var(--bg-tertiary);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        .tech-categories {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .tech-category {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .tech-category-title {
-            font-weight: 600;
-            color: var(--text-accent);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .tech-tag {
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .tech-tag:hover {
-            background: var(--accent);
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .experience-item {
-            background: var(--bg-tertiary);
-            padding: 30px;
-            margin-bottom: 30px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            transition: all 0.3s ease;
-        }
-
-        .experience-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 8px 25px var(--shadow);
-        }
-
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .job-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 5px;
-        }
-
-        .company {
-            color: var(--text-accent);
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-
-        .duration {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            background: var(--bg-secondary);
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-        }
-
-        .description {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .achievements {
-            margin-top: 20px;
-        }
-
-        .achievements h4 {
-            color: var(--text-accent);
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-
-        .achievement-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .achievement-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            color: var(--text-secondary);
-        }
-
-        .achievement-list li::before {
-            content: '▶';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-size: 0.8rem;
-        }
-
-        .project-card {
-            background: var(--bg-tertiary);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid var(--border);
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--accent);
-        }
-
-        .project-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px var(--shadow);
-        }
-
-        .project-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .project-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 5px;
-        }
-
-        .project-status {
-            background: var(--accent);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .project-tech-tag {
-            background: var(--bg-secondary);
-            color: var(--text-accent);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            border: 1px solid var(--border);
-        }
-
-        .project-description {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .project-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .project-detail-section {
-            background: var(--bg-secondary);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-
-        .project-detail-section h5 {
-            color: var(--text-accent);
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .project-link {
-            background: var(--accent);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .project-link:hover {
-            background: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        .certificates {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .certificate-item {
-            background: var(--bg-tertiary);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            transition: all 0.3s ease;
-        }
-
-        .certificate-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow);
-        }
-
-        .certificate-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .certificate-issuer {
-            color: var(--text-accent);
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-
-        .certificate-date {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .certificate-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 768px) {
-            .job-header,
-            .project-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .project-details {
-                grid-template-columns: 1fr;
-            }
-            
-            .certificates {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-    
-    <div class="container">
-        <div class="main-content">
-            <main class="content">
-                <div class="section">
-                    <h2>About me</h2>
-                    
-                    <div class="experience-item">
-                        <div class="job-header">
-                            <div>
-                                <div class="job-title">My experience</div>
-                            </div>
-                        </div>
-                        <div class="description">
-        I am a data professional with a strong foundation across the data value chain and a deep curiosity for how information drives business decisions. 
-        I began my career on the business side, gradually transitioning into increasingly technical roles.
-        Throughout my journey, my roles forced me to operate as a Data Analyst, Data Engineer, BI Developer, Data Modeller, and Data Governance Specialist - gaining a comprehensive view of modern data platforms and workflows.
-        My diverse experience, combined with a constant drive to learn and grow, is fueling my progression toward becoming a Full Stack Data Developer, capable of designing and delivering robust, 
-        scalable data solutions across the enterprise.
-                        </div>
-                        <div class="achievements">
-                            <h4>What I'm most proud of?</h4>
-                            <ul class="achievement-list">
-        <li>Deployed a data model that serves as a single source of truth for all company's analysts and also led to the discovery of a 20M EUR accounting error (25% of yearly company revenue).</li>
-        <li>Streamlined Business Intelligence solutions, reducing storage usage by 40% and the number of dashboards by 50%.</li>
-        <li>Acted as a bridge between business and data teams to drive data-driven transformation, translating business needs into actionable data initiatives. </li>
-        <li>Championed internal adoption of tools like dbt, facilitated knowledge sharing across teams, and coordinated local and group-level efforts to align strategy and accelerate projects.</li>
-                                <li>Mentored junior team members and supported their growths into data engineering and analytics engineering roles.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-<!-- -- end of section -->
-                <div class="section">
-                    <h2>Featured Projects</h2>
-                    
-                    <div class="project-card">
-                        <div class="project-header">
-                            <div>
-                                <div class="project-title">Unified analytics data model</div>
-                            </div>
-                            <div class="project-status">Production</div>
-                        </div>
-                        <div class="project-tech">
-                            <span class="project-tech-tag">BigQuery</span>
-                            <span class="project-tech-tag">SQL</span>
-                            <span class="project-tech-tag">PowerBI</span>
-                            <span class="project-tech-tag">AirFlow</span>
-                            <span class="project-tech-tag">ETRM system</span>
-                            <span class="project-tech-tag">Snowflake</span>
-                            <span class="project-tech-tag">dbt</span>
-                        </div>
-                        <div class="project-description">
-                            Delivered a full scale data model for both analytical and visualization purposes that focused on delivering the most precise revenue and margin numbers.
-                        </div>
-                        <div class="project-details">
-                            <div class="project-detail-section">
-                                <h5>Technical Implementation</h5>
-                                <ul class="achievement-list">
-                                    <li>New architecture being reusable throughout the organization and supporting multitude of analytical objectives. </li>
-                                    <li>Advanced, scalable analytics dashboard limiting previous size of previous solution by 40%</li>
-                                    <li>Advanced search with Elasticsearch</li>
-                                    <li>Automated CI/CD pipeline with GitHub Actions</li>
-                                </ul>
-                            </div>
-                            <div class="project-detail-section">
-                                <h5>Key Features</h5>
-                                <ul class="achievement-list">
-                                    <li>Unit and data tests</li>
-                                    <li>Formulated technical memo and deployment process principles</li>
-                                    <li>Dashboards multi-language and multi-currency support</li>
-                                    <li>Automated discrepencies reporting system</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-header">
-                            <div>
-                                <div class="project-title">Real-time Collaboration Platform</div>
-                            </div>
-                            <div class="project-status">Beta</div>
-                        </div>
-                        <div class="project-tech">
-                            <span class="project-tech-tag">Vue.js</span>
-                            <span class="project-tech-tag">Socket.io</span>
-                            <span class="project-tech-tag">MongoDB</span>
-                            <span class="project-tech-tag">Express.js</span>
-                            <span class="project-tech-tag">WebRTC</span>
-                        </div>
-                        <div class="project-description">
-                            A comprehensive team collaboration platform featuring real-time document editing, video conferencing, and project management tools. Built to compete with platforms like Slack and Microsoft Teams.
-                        </div>
-                        <div class="project-details">
-                            <div class="project-detail-section">
-                                <h5>Real-time Features</h5>
-                                <ul class="achievement-list">
-                                    <li>Collaborative document editing with OT (Operational Transform)</li>
-                                    <li>Video/audio conferencing with WebRTC</li>
-                                    <li>Real-time chat with message history</li>
-                                    <li>Live cursor tracking and user presence</li>
-                                    <li>Instant notifications and alerts</li>
-                                </ul>
-                            </div>
-                            <div class="project-detail-section">
-                                <h5>Technical Challenges</h5>
-                                <ul class="achievement-list">
-                                    <li>Handling 500+ concurrent WebSocket connections</li>
-                                    <li>Implementing conflict resolution for document editing</li>
-                                    <li>Optimizing video streaming performance</li>
-                                    <li>Building scalable notification system</li>
-                                    <li>Ensuring data consistency across multiple servers</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link">Live Demo</a>
-                            <a href="#" class="project-link">GitHub</a>
-                        </div>
-                    </div>
-                    
-                    <div class="project-card">
-                        <div class="project-header">
-                            <div>
-                                <div class="project-title">AI-Powered Data Analytics Dashboard</div>
-                            </div>
-                            <div class="project-status">In Development</div>
-                        </div>
-                        <div class="project-tech">
-                            <span class="project-tech-tag">React</span>
-                            <span class="project-tech-tag">D3.js</span>
-                            <span class="project-tech-tag">Python</span>
-                            <span class="project-tech-tag">TensorFlow</span>
-                            <span class="project-tech-tag">FastAPI</span>
-                        </div>
-                        <div class="project-description">
-                            Advanced analytics platform that leverages machine learning to provide predictive insights and automated reporting. Features custom visualizations and AI-driven recommendations for business intelligence.
-                        </div>
-                        <div class="project-details">
-                            <div class="project-detail-section">
-                                <h5>AI/ML Features</h5>
-                                <ul class="achievement-list">
-                                    <li>Predictive analytics with time series forecasting</li>
-                                    <li>Anomaly detection in real-time data streams</li>
-                                    <li>Natural language query processing</li>
-                                    <li>Automated report generation</li>
-                                    <li>Custom recommendation engine</li>
-                                </ul>
-                            </div>
-                            <div class="project-detail-section">
-                                <h5>Data Visualization</h5>
-                                <ul class="achievement-list">
-                                    <li>Interactive 3D data visualizations</li>
-                                    <li>Real-time updating charts and graphs</li>
-                                    <li>Custom dashboard builder</li>
-                                    <li>Export capabilities (PDF, Excel, CSV)</li>
-                                    <li>Mobile-responsive design</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link">Demo Video</a>
-                            <a href="#" class="project-link">GitHub</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2>Certifications</h2>
-                    <div class="certificates">
-                        <div class="certificate-item">
-                            <div class="certificate-name">AWS Certified Solutions Architect</div>
-                            <div class="certificate-issuer">Amazon Web Services</div>
-                            <div class="certificate-date">Valid: March 2023 - March 2026</div>
-                            <div class="certificate-description">
-                                Comprehensive certification covering cloud architecture, security, and optimization. Demonstrates ability to design distributed systems on AWS.
-                            </div>
-                        </div>
-                        <div class="certificate-item">
-                            <div class="certificate-name">Google Cloud Professional Developer</div>
-                            <div class="certificate-issuer">Google Cloud Platform</div>
-                            <div class="certificate-date">Valid: January 2023 - January 2025</div>
-                            <div class="certificate-description">
-                                Advanced certification in cloud application development, focusing on scalable and secure cloud solutions.
-                            </div>
-                        </div>
-                        <div class="certificate-item">
-                            <div class="certificate-name">Certified Kubernetes Administrator (CKA)</div>
-                            <div class="certificate-issuer">Cloud Native Computing Foundation</div>
-                            <div class="certificate-date">Valid: September 2022 - September 2025</div>
-                            <div class="certificate-description">
-                                Hands-on certification demonstrating skills in Kubernetes cluster administration, troubleshooting, and management.
-                            </div>
-                        </div>
-                        <div class="certificate-item">
-                            <div class="certificate-name">MongoDB Certified Developer</div>
-                            <div class="certificate-issuer">MongoDB Inc.</div>
-                            <div class="certificate-date">Valid: November 2022 - November 2025</div>
-                            <div class="certificate-description">
-                                Certification in MongoDB database design, development, and optimization for high-performance applications.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="section">
-                    <h2>Tech Stack</h2>
-                    <div class="certificates">
-                        <div class="certificate-item">
-                            <div class="certificate-name">Frontend Development</div>
-                            <div class="certificate-issuer">Core Technologies</div>
-                            <div class="certificate-description">
-                                React, Vue.js, TypeScript, Next.js, Tailwind CSS, HTML5, CSS3, JavaScript ES6+
-                            </div>
-                        </div>
-                        <div class="certificate-item">
-                            <div class="certificate-name">Backend Development</div>
-                            <div class="certificate-issuer">Server Technologies</div>
-                            <div class="certificate-description">
-                                Node.js, Python, Express.js, FastAPI, RESTful APIs, GraphQL, WebSocket
-                            </div>
-                        </div>
-                        <div class="certificate-item">
-                            <div class="certificate-name">Database & Storage</div>
-                            <div class="certificate-issuer">Data Management</div>
-                            <div class="certificate-description">
-                                PostgreSQL, MongoDB, Redis, MySQL, Elasticsearch, AWS S3, Database Design
-                            </div>
-                        </div>
-                        <div class="certificate-item">
-                            <div class="certificate-name">DevOps & Cloud</div>
-                            <div class="certificate-issuer">Infrastructure</div>
-                            <div class="certificate-description">
-                                Docker, Kubernetes, AWS, Google Cloud, CI/CD, GitHub Actions, Terraform
-                            </div>
-                        </div>
-                        <div class="certificate-item">
-                            <div class="certificate-name">Tools & Methodologies</div>
-                            <div class="certificate-issuer">Development Practices</div>
-                            <div class="certificate-description">
-                                Git, Agile/Scrum, TDD, Jest, Cypress, Webpack, ESLint, Prettier
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <script>
-        function toggleTheme() {
-            const body = document.body;
-            const toggle = document.querySelector('.theme-toggle');
-            
-            body.classList.toggle('light-mode');
-            
-            if (body.classList.contains('light-mode')) {
-                toggle.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
-                toggle.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        // Load saved theme
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('theme');
-            const toggle = document.querySelector('.theme-toggle');
-            
-            if (savedTheme === 'light') {
-                document.body.classList.add('light-mode');
-                toggle.textContent = '🌙';
-            } else {
-                toggle.textContent = '☀️';
-            }
-        });
-    </script>
-</body>
-</html>
-
-<!-- <!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jakub Mroczek – Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jakub Mroczek</title>
+  <meta name="description" content="Analytics Engineer and interim Data Platform Team Lead in energy trading. Data architecture, governance and data quality.">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+/* Google-style design tokens. Dark is the default. */
+:root,
+:root[data-theme="dark"] {
+  --bg: #202124;
+  --surface: #303134;
+  --surface-2: #3c4043;
+  --line: #5f6368;
+  --text: #e8eaed;
+  --muted: #9aa0a6;
+  --blue: #8ab4f8;
+  --blue-tint: #394457;
+  --red: #f28b82;
+  --yellow: #fdd663;
+  --green: #81c995;
+  --chip-text: #d2e3fc;
+  --shadow: 0 1px 3px rgba(0, 0, 0, .5), 0 4px 8px 3px rgba(0, 0, 0, .15);
+}
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
-      line-height: 1.6;
-      padding: 2rem;
-    }
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #f8f9fa;
+  --surface-2: #f1f3f4;
+  --line: #dadce0;
+  --text: #202124;
+  --muted: #5f6368;
+  --blue: #1a73e8;
+  --blue-tint: #e8f0fe;
+  --red: #ea4335;
+  --yellow: #fbbc04;
+  --green: #34a853;
+  --chip-text: #174ea6;
+  --shadow: 0 1px 2px rgba(60, 64, 67, .3), 0 1px 3px 1px rgba(60, 64, 67, .15);
+}
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      padding: 2rem;
-    }
+* { box-sizing: border-box; }
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+html { -webkit-text-size-adjust: 100%; }
 
-    header h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.5rem;
-    }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Google Sans", "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  transition: background .2s, color .2s;
+}
 
-    header p {
-      color: #777;
-      font-size: 1.1rem;
-    }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-    section {
-      margin-bottom: 2rem;
-    }
+.theme-toggle {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+}
+.theme-toggle:hover { background: var(--surface-2); }
 
-    h2 {
-      font-size: 1.5rem;
-      color: #005f99;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #e0e0e0;
-      padding-bottom: 0.3rem;
-    }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 14px;
+  background: transparent;
+  white-space: nowrap;
+}
+.chip.tonal {
+  background: var(--blue-tint);
+  border-color: transparent;
+  color: var(--chip-text);
+}
+a.chip:hover { text-decoration: none; background: var(--surface-2); }
 
-    ul {
-      list-style: disc;
-      padding-left: 1.5rem;
-    }
+/* Dropdowns built on <details> */
+details.dd {
+  border-bottom: 1px solid var(--line);
+}
+details.dd > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 4px;
+  font-size: 16px;
+}
+details.dd > summary::-webkit-details-marker { display: none; }
+details.dd > summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg);
+  transition: transform .2s;
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+details.dd[open] > summary::after { transform: rotate(-135deg); }
+details.dd .dd-body { padding: 0 4px 16px; }
 
-    li {
-      margin-bottom: 0.6rem;
-    }
+.stack-list { list-style: none; margin: 0; padding: 0; }
+.stack-list li { padding: 6px 0; }
+.stack-list b { font-weight: 500; }
+.stack-list span { color: var(--muted); font-size: 14px; display: block; }
 
-    a {
-      color: #005f99;
-      text-decoration: none;
-    }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);
+}
+  </style>
+  <script>
+(function () {
+  var t = 'dark';
+  try { t = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+  document.documentElement.setAttribute('data-theme', t);
+})();
 
-    a:hover {
-      text-decoration: underline;
-    }
+function toggleTheme() {
+  var r = document.documentElement;
+  var next = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  r.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch (e) {}
+}
+  </script>
+  <style>
+    /* ---------- Header ---------- */
+    .head { display: flex; align-items: center; gap: 24px; padding: 20px 24px 0; flex-wrap: wrap; }
+    .mini-logo { font-size: 26px; font-weight: 500; letter-spacing: -1px; color: var(--text); }
+    .mini-logo:hover { text-decoration: none; }
+    .mini-logo span:nth-child(1) { color: #4285f4; }
+    .mini-logo span:nth-child(2) { color: #ea4335; }
+    .bar { flex: 1; min-width: 240px; max-width: 690px; display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-radius: 24px; background: var(--surface); box-shadow: var(--shadow); }
+    .bar svg { fill: var(--muted); flex-shrink: 0; }
+    .bar .q { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .head .theme-toggle { margin-left: auto; }
 
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #888;
-    }
+    .tabs { display: flex; gap: 24px; padding: 0 24px 0 114px; border-bottom: 1px solid var(--line); margin-top: 12px; overflow-x: auto; scrollbar-width: none; }
+    .tabs button { background: none; border: 0; border-bottom: 3px solid transparent; padding: 12px 2px; color: var(--muted); font: inherit; font-size: 14px; cursor: pointer; white-space: nowrap; }
+    .tabs button[aria-selected="true"] { color: var(--blue); border-color: var(--blue); }
+    .tabs button:hover { color: var(--text); }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-      }
+    /* ---------- Layout ---------- */
+    .layout { display: grid; grid-template-columns: minmax(0, 652px) 368px; gap: 56px; padding: 16px 24px 64px 114px; }
+    .stats { color: var(--muted); font-size: 14px; margin-bottom: 8px; }
+    section[data-tab] h2 { font-size: 20px; font-weight: 400; margin: 36px 0 4px; }
+    section[data-tab] .section-note { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+    .hidden { display: none !important; }
 
-      .container {
-        padding: 1.5rem;
-      }
+    /* ---------- Search results ---------- */
+    .result { margin: 24px 0; }
+    .crumb { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 10px; line-height: 1.3; }
+    .crumb .site { color: var(--text); font-size: 14px; display: block; }
+    .fav { width: 28px; height: 28px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; font-size: 11px; font-weight: 500; color: var(--text); flex-shrink: 0; }
+    .fav.logo { background: #fff; padding: 3px; overflow: hidden; border: 1px solid var(--line); }
+    .fav.logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .result h3 { margin: 6px 0 4px; font-size: 20px; font-weight: 400; color: var(--blue); line-height: 1.3; }
+    .result > p { margin: 0; color: var(--muted); font-size: 14px; }
+    .result > p b, .result li b { color: var(--text); font-weight: 500; }
+    .result ul.bullets { margin: 6px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+    .result ul.bullets li { margin: 3px 0; }
 
-      header h1 {
-        font-size: 1.8rem;
-      }
+    .sitelinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .tag { font-size: 12px; padding: 3px 10px; border-radius: 12px; background: var(--surface-2); color: var(--text); }
+    .tag.wip { background: transparent; border: 1px dashed var(--line); color: var(--muted); }
+
+    /* Project "more" dropdown inside a result */
+    details.more { margin-top: 8px; }
+    details.more > summary { list-style: none; cursor: pointer; color: var(--blue); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+    details.more > summary::-webkit-details-marker { display: none; }
+    details.more > summary::after { content: "▾"; font-size: 12px; transition: transform .2s; }
+    details.more[open] > summary::after { transform: rotate(180deg); }
+    details.more > summary .less { display: none; }
+    details.more[open] > summary .less { display: inline; }
+    details.more[open] > summary .moretxt { display: none; }
+    .case { margin-top: 10px; border-left: 3px solid var(--blue); padding: 2px 0 2px 14px; font-size: 14px; }
+    .case dt { color: var(--text); font-weight: 500; margin-top: 8px; }
+    .case dt:first-child { margin-top: 0; }
+    .case dd { margin: 2px 0 0; color: var(--muted); }
+
+    /* Project groups + Google-style filter chips */
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 4px; }
+    .fchip { font: inherit; font-size: 14px; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: var(--text); cursor: pointer; }
+    .fchip:hover { background: var(--surface-2); }
+    .fchip[aria-pressed="true"] { background: var(--blue-tint); color: var(--chip-text); border-color: transparent; }
+    .group-title { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin: 32px 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+    .result.compact h3 { font-size: 17px; }
+    .early { list-style: none; margin: 12px 0 0; padding: 0; }
+    .early li { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
+    .early .role { flex: 1; font-size: 15px; }
+    .early .org { display: block; font-size: 13px; color: var(--muted); }
+    .early .when { font-size: 13px; color: var(--muted); white-space: nowrap; }
+
+    /* People also ask */
+    .paa details.dd:first-of-type { border-top: 1px solid var(--line); }
+
+    /* ---------- Knowledge panel ---------- */
+    .panel { border: 1px solid var(--line); border-radius: 8px; padding: 20px; position: sticky; top: 16px; align-self: start; }
+    .panel .avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--blue); color: var(--bg); display: grid; place-items: center; font-size: 26px; font-weight: 500; float: right; margin-left: 12px; }
+    .panel h1 { margin: 0; font-size: 28px; font-weight: 400; line-height: 1.2; }
+    .panel .sub { color: var(--muted); font-size: 14px; margin: 4px 0 16px; }
+    .panel .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; clear: both; }
+    .panel p { font-size: 14px; margin: 0 0 16px; }
+    .facts { border-top: 1px solid var(--line); padding-top: 12px; font-size: 14px; margin: 0; }
+    .facts div { padding: 3px 0; }
+    .facts dt { display: inline; font-weight: 500; }
+    .facts dd { display: inline; margin: 0; }
+    .highlights { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .highlights .num { font-size: 22px; }
+    .highlights .lbl { font-size: 12px; color: var(--muted); line-height: 1.3; }
+    .panel .foot { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 10px; font-size: 12px; color: var(--muted); }
+
+    footer { color: var(--muted); font-size: 13px; padding: 16px 24px 32px 114px; border-top: 1px solid var(--line); background: var(--surface); }
+
+    @media (max-width: 1060px) {
+      .layout { grid-template-columns: 1fr; padding: 16px; gap: 0; }
+      .tabs { padding: 0 16px; }
+      .panel { position: static; order: -1; margin-bottom: 8px; }
+      .head { padding: 16px 16px 0; gap: 12px; }
+      footer { padding: 16px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
+
+  <header class="head">
+    <a class="mini-logo" href="#" aria-label="Home"><span>J</span><span>M</span></a>
+    <div class="bar" role="presentation">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 9.5 16a6.5 6.5 0 0 0 4.2-1.6l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+      <span class="q">jakub mroczek analytics engineer</span>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">◐</button>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" data-show="all" aria-selected="true">All</button>
+    <button role="tab" data-show="experience" aria-selected="false">Experience</button>
+    <button role="tab" data-show="projects" aria-selected="false">Projects</button>
+    <button role="tab" data-show="stack" aria-selected="false">Tech stack</button>
+    <button role="tab" data-show="more" aria-selected="false">More</button>
+  </nav>
+
+  <div class="layout">
+    <main>
+      <div class="stats">About 5 roles and 13 projects in energy trading, consulting and banking</div>
+
+      <!-- ================= EXPERIENCE ================= -->
+      <section data-tab="experience" id="experience">
+        <h2>Experience</h2>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Energy trading and origination · Warsaw · Nov 2026 – present</span></div>
+          <h3>Interim Data Platform Team Lead</h3>
+          <p>Product owner for the <b>data engineering and BI teams (8 people)</b>, while staying hands-on as a senior analytics engineer.</p>
+          <ul class="bullets">
+            <li>Run the team ceremonies, agree priorities with stakeholders, set the vision and break requests into tasks for mid and senior engineers.</li>
+            <li>Turned a <b>2-year backlog of 180 tasks and ideas</b> into <b>10 strategic initiatives</b> for the next financial year.</li>
+            <li>Leading the team's current work: moving <b>10 repositories from GitLab to GitHub</b>, Cloud Composer upgrades and migrations, and a data democratization pipeline (as-is and to-be mapping, now in execution).</li>
+          </ul>
+          <div class="sitelinks"><span class="tag">Product ownership</span><span class="tag">Prioritization</span><span class="tag wip">In progress</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Energy trading and origination · Warsaw · Aug 2024 – present</span></div>
+          <h3>Senior Analytics Engineer</h3>
+          <ul class="bullets">
+            <li>Surfaced a <b>€25M accounting error</b> and recovered <b>€3M in margin</b> by rebuilding revenue and margin data marts and resolving the data-quality issues underneath them.</li>
+            <li>Ran a price elasticity analysis that became the company's client segmentation, quantifying <b>€15M of portfolio margin (8%) at risk of churn</b> and triggering an active derisking programme.</li>
+            <li>Cut pipeline runtime and storage by <b>50% across ~3 TB</b> by redesigning models, incremental logic and query patterns on Snowflake and BigQuery.</li>
+            <li>Replaced a legacy O(n²) contract-lineage pipeline with an incremental dbt/Snowflake model over <b>~1M contracts</b>.</li>
+            <li>Prioritised the analytics roadmap for a team of eight, arbitrating <b>five business functions</b> on what got built and when.</li>
+            <li>Set the engineering and governance standard for the analytics function: dbt and Git adoption, code review and design documentation, driven through mentorship rather than mandate.</li>
+            <li>Worked across BI and data engineering: created, split and optimized Airflow DAGs, debugged Cloud Build CI/CD pipelines, and managed Snowflake access roles in Terraform, including AI-usage limits.</li>
+          </ul>
+          <div class="sitelinks"><span class="tag">dbt</span><span class="tag">Snowflake</span><span class="tag">BigQuery</span><span class="tag">Airflow</span><span class="tag">Terraform</span><span class="tag">Power BI</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/pwc-icon.svg" alt="PwC"></span><span><span class="site">PwC Polska</span>Data &amp; Business Intelligence · Warsaw · Jan 2021 – Jul 2024</span></div>
+          <h3>Senior Data Analyst, Data &amp; Business Intelligence</h3>
+          <ul class="bullets">
+            <li>Built end-to-end analytical pipelines and BI layers from scratch (Snowflake, dbt, SQL, Git, Power BI), consolidating operational and financial KPIs into products stakeholders used for recurring decisions.</li>
+            <li>Turned ambiguous requirements into implementation-ready models for multinational clients, running workshops with business-line leaders.</li>
+            <li>Automated recurring reporting and audit procedures (SQL, VBA, Power Query), removing <b>about two working days</b> of manual preparation per reporting cycle.</li>
+            <li>Delivered <b>6 complex data marts</b> (Snowflake, dbt) for a payment-processing analytics project.</li>
+            <li>Coordinated a team of 3 on a client project, and received outstanding client feedback for the UX/UI of a delivered analytics solution.</li>
+            <li>Delivered across payments, real estate investment, banking and insurance.</li>
+          </ul>
+          <div class="sitelinks"><span class="tag">Snowflake</span><span class="tag">dbt</span><span class="tag">Power BI</span><span class="tag">SQL</span></div>
+        </article>
+
+        <h3 class="group-title">Early career</h3>
+        <ul class="early">
+          <li><span class="fav logo"><img src="logos/Citi.svg" alt="Citi"></span><span class="role">Data Analyst, Graduate Rotational Program<span class="org">Citibank, Warsaw</span></span><span class="when">Aug 2019 – Dec 2020</span></li>
+          <li><span class="fav logo"><img src="logos/pwc-icon.svg" alt="PwC"></span><span class="role">Tax Analyst (intern → associate)<span class="org">PwC Polska, Warsaw</span></span><span class="when">Jun 2018 – Jul 2019</span></li>
+        </ul>
+      </section>
+
+      <!-- ================= PROJECTS ================= -->
+      <section data-tab="projects" id="projects">
+        <h2>Projects</h2>
+        <p class="section-note">Each project opens into: challenge, what I built, impact.</p>
+        <div class="filters" role="group" aria-label="Filter projects">
+          <button class="fchip" data-group="all" aria-pressed="true">All</button>
+          <button class="fchip" data-group="business" aria-pressed="false">Business impact</button>
+          <button class="fchip" data-group="platform" aria-pressed="false">Platform &amp; engineering</button>
+          <button class="fchip" data-group="team" aria-pressed="false">Team &amp; enablement</button>
+        </div>
+
+        <div class="group" data-group="business">
+        <h3 class="group-title">Business impact</h3>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Finance · Revenue &amp; margin</span></div>
+          <h3>Revenue and margin model: one source of truth</h3>
+          <p>A dimensional model for revenue and margin that analysts across the organization now use, and that surfaced a <b>€25M accounting error</b>.</p>
+          <details class="more"><summary><span class="moretxt">Show case study</span><span class="less">Hide case study</span></summary>
+            <dl class="case">
+              <dt>Challenge</dt><dd>Revenue and margin figures differed between teams and dashboards, and nobody could trace why.</dd>
+              <dt>What I built</dt><dd>Rebuilt the revenue and margin data marts as a dimensional model in dbt, with tests on completeness and referential integrity, and fixed the data-quality issues underneath.</dd>
+              <dt>Impact</dt><dd>Surfaced a €25M accounting error (more than 25% of a business unit's annual revenue) and recovered €3M in margin.</dd>
+            </dl>
+          </details>
+          <div class="sitelinks"><span class="tag">dbt</span><span class="tag">Snowflake</span><span class="tag">Kimball</span><span class="tag">Data quality</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Sales · Pricing · Risk</span></div>
+          <h3>Price elasticity and client segmentation</h3>
+          <p>An analysis that became the company's client segmentation and put a number on margin at risk: <b>€15M (8%)</b>.</p>
+          <details class="more"><summary><span class="moretxt">Show case study</span><span class="less">Hide case study</span></summary>
+            <dl class="case">
+              <dt>Challenge</dt><dd>Risk, Sales and Pricing treated clients differently, with no shared view of who was likely to leave, while growing competition in the market made churn fluctuate heavily.</dd>
+              <dt>What I built</dt><dd>Defined small, medium and large tiers by how clients behave: price sensitivity, product preference and margin contribution.</dd>
+              <dt>Impact</dt><dd>Quantified €15M of portfolio margin (8%) at risk of churn, gave the three teams a shared basis for treating each tier, and triggered an active derisking programme.</dd>
+            </dl>
+          </details>
+          <div class="sitelinks"><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">Segmentation</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Billing · Receivables</span></div>
+          <h3>Billing and receivables monitoring platform</h3>
+          <p>Monitors about <b>60k invoices a month</b> and flags about <b>1.3k a quarter</b> for correction. Also found <b>more than 300 invoices</b> needing correction for past periods.</p>
+          <details class="more"><summary><span class="moretxt">Show case study</span><span class="less">Hide case study</span></summary>
+            <dl class="case">
+              <dt>Challenge</dt><dd>Invoice problems were found late, and some undelivered invoices blocked receivables recognition.</dd>
+              <dt>What I built</dt><dd>A monitoring layer over billing and receivables data. Project led to: identifying invoices needing correction for past periods; identifying undelivered invoices; shortening issue-detection time; implementation of a reconciliation process for retroactively updated energy data.</dd>
+              <dt>Impact</dt><dd>About 60k invoices monitored each month, about 1.3k flagged for correction each quarter, and more than 300 past-period invoices identified for correction.</dd>
+            </dl>
+          </details>
+          <div class="sitelinks"><span class="tag">dbt</span><span class="tag">SQL</span><span class="tag">Power BI</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Platform · Adoption</span></div>
+          <h3>Gold layer adoption through usage monitoring</h3>
+          <p>Raised gold-layer adoption from <b>20% to 50%</b> by reading how people actually query the warehouse.</p>
+          <details class="more"><summary><span class="moretxt">Show case study</span><span class="less">Hide case study</span></summary>
+            <dl class="case">
+              <dt>Challenge</dt><dd>Less experienced analysts weren't used to working with data models, so they kept querying raw and intermediate layers instead of the curated gold layer.</dd>
+              <dt>What I built</dt><dd>Custom SQL on warehouse metadata to monitor usage, then a roadmap of gold-layer objects (medallion architecture) and data-quality tests based on the gaps it showed.</dd>
+              <dt>Impact</dt><dd>Gold-layer adoption went from 20% to 50%.</dd>
+            </dl>
+          </details>
+          <div class="sitelinks"><span class="tag">Medallion</span><span class="tag">dbt</span><span class="tag">Usage analytics</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Self-service · AI</span></div>
+          <h3>One-big-table layer for self-service and the AI assistant</h3>
+          <p>Join-free OBT objects that let the Operations team query data on their own and give the company's internal AI assistant structured context.</p>
+          <details class="more"><summary><span class="moretxt">Show case study</span><span class="less">Hide case study</span></summary>
+            <dl class="case">
+              <dt>Challenge</dt><dd>Operations depended on my team for routine data questions.</dd>
+              <dt>What I built</dt><dd>OBT objects designed for predefined queries over single, join-free tables, usable by people and by the internal AI assistant.</dd>
+              <dt>Impact</dt><dd>Fewer ad-hoc tickets to the analytics team.</dd>
+            </dl>
+          </details>
+          <div class="sitelinks"><span class="tag">OBT</span><span class="tag">dbt</span><span class="tag">AI context</span></div>
+        </article>
+
+        </div>
+
+        <div class="group" data-group="platform">
+        <h3 class="group-title">Platform &amp; engineering</h3>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Warehouse · Migration</span></div>
+          <h3>BigQuery to Snowflake migration</h3>
+          <p>Migrating about <b>10 data marts</b> from <b>3 source systems</b>, roughly <b>400 tables</b>, from BigQuery to Snowflake.</p>
+          <div class="sitelinks"><span class="tag">BigQuery</span><span class="tag">Snowflake</span><span class="tag">dbt</span><span class="tag wip">In progress</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Code · Migration</span></div>
+          <h3>GitLab to GitHub migration</h3>
+          <p>Moving the team's <b>10 repositories</b> from GitLab to GitHub, including the CI/CD around them.</p>
+          <div class="sitelinks"><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">CI/CD</span><span class="tag wip">In progress</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Contracts · Performance</span></div>
+          <h3>Contract lineage rebuild</h3>
+          <p>Replaced a legacy O(n²) pipeline with an incremental dbt/Snowflake model over <b>~1M contracts</b>.</p>
+          <details class="more"><summary><span class="moretxt">Show case study</span><span class="less">Hide case study</span></summary>
+            <dl class="case">
+              <dt>Challenge</dt><dd>The legacy lineage pipeline scaled quadratically and ran on undocumented logic.</dd>
+              <dt>What I built</dt><dd>An incremental model that defines the business rules for what actually generates margin, instead of inheriting the old logic.</dd>
+              <dt>Impact</dt><dd>Part of the 50% cut in pipeline runtime and storage across ~3 TB.</dd>
+            </dl>
+          </details>
+          <div class="sitelinks"><span class="tag">dbt</span><span class="tag">Snowflake</span><span class="tag">Incremental models</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Data quality · Energy</span></div>
+          <h3>Testing suite for energy distributor data</h3>
+          <p>A data testing suite that limits errors inherited from energy distributors before they reach hedging and invoicing.</p>
+          <details class="more"><summary><span class="moretxt">Show case study</span><span class="less">Hide case study</span></summary>
+            <dl class="case">
+              <dt>Challenge</dt><dd>Errors in distributor data travelled downstream into hedging, invoicing and analysis.</dd>
+              <dt>What I built</dt><dd>Analysed, documented and delivered a testing suite on the incoming data.</dd>
+              <dt>Impact</dt><dd>Lower risk of overhedging and overinvoicing, and less time spent on downstream analysis.</dd>
+            </dl>
+          </details>
+          <div class="sitelinks"><span class="tag">dbt tests</span><span class="tag">Data quality</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Orchestration · CI/CD · Access</span></div>
+          <h3>Pipelines, CI/CD and access as code</h3>
+          <p>Hands-on platform work picked up from the BI side: Airflow DAGs, Cloud Build pipelines and Terraform-managed Snowflake roles.</p>
+          <details class="more"><summary><span class="moretxt">Show details</span><span class="less">Hide details</span></summary>
+            <dl class="case">
+              <dt>Airflow</dt><dd>Created, split and optimized DAGs, with Astronomer Cosmos and plain Python.</dd>
+              <dt>CI/CD</dt><dd>Debugged Cloud Build pipelines and proposed changes.</dd>
+              <dt>Terraform</dt><dd>Defined, maintained and audited Snowflake roles, most recently around AI usage, such as token limits.</dd>
+              <dt>Composer</dt><dd>Leading Cloud Composer upgrades and migrations (in progress).</dd>
+            </dl>
+          </details>
+          <div class="sitelinks"><span class="tag">Airflow</span><span class="tag">Cloud Build</span><span class="tag">Terraform</span><span class="tag">Snowflake</span></div>
+        </article>
+        </div>
+
+        <div class="group" data-group="team">
+        <h3 class="group-title">Team &amp; enablement</h3>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Planning · Product ownership</span></div>
+          <h3>From a 180-item backlog to 10 strategic initiatives</h3>
+          <p>Turned a <b>2-year backlog of 180 tasks and ideas</b> into <b>10 strategic initiatives</b> for the next financial year, as interim Data Platform Team Lead.</p>
+          <div class="sitelinks"><span class="tag">Prioritization</span><span class="tag">Roadmap</span><span class="tag">Stakeholders</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>Governance · Operating model</span></div>
+          <h3>Analytics operating model and data contracts</h3>
+          <p>A hub-and-spoke operating model with four core functions, a RACI and layer ownership, and <b>data contracts modelled in LeanIX</b>.</p>
+          <details class="more"><summary><span class="moretxt">Show case study</span><span class="less">Hide case study</span></summary>
+            <dl class="case">
+              <dt>Challenge</dt><dd>Ownership of data layers and handoffs between teams was unclear.</dd>
+              <dt>What I built</dt><dd>Four core functions (Platform &amp; Data Engineering, Analytics Engineering, Analytics &amp; Insight, Governance &amp; Enablement), a RACI, layer ownership, and handoff contracts in LeanIX. Owned the conceptual, logical and physical architecture model and its documentation.</dd>
+              <dt>Impact</dt><dd>A shared answer to "who owns what" across local and group-level data teams.</dd>
+            </dl>
+          </details>
+          <div class="sitelinks"><span class="tag">LeanIX</span><span class="tag">Sparx EA</span><span class="tag">RACI</span><span class="tag">Data contracts</span></div>
+        </article>
+
+        <article class="result">
+          <div class="crumb"><span class="fav logo"><img src="logos/axpo-icon.svg" alt="Axpo"></span><span><span class="site">Axpo Polska</span>People · Engineering practice</span></div>
+          <h3>Coaching team members in data modelling and data engineering</h3>
+          <p>Coached <b>about 5 colleagues</b> in data modelling and data engineering through pairing, code reviews and joint analysis sessions. One financial analyst moved into a data analyst role.</p>
+          <div class="sitelinks"><span class="tag">Mentoring</span><span class="tag">Data modelling</span><span class="tag">Code review</span></div>
+        </article>
+        </div>
+
+      </section>
+
+      <!-- ================= TECH STACK ================= -->
+      <section data-tab="stack" class="paa" id="stack">
+        <h2>People also ask</h2>
+        <p class="section-note">What I work with in production, and how.</p>
+        <details class="dd"><summary>Which warehouses does he work with?</summary><div class="dd-body"><ul class="stack-list">
+          <li><b>Snowflake</b><span>Columnar modelling, incremental loads, performance tuning</span></li>
+          <li><b>BigQuery</b><span>Partitioning, incremental loads, usage monitoring on warehouse metadata</span></li>
+          <li><b>PostgreSQL</b><span>Personal projects</span></li>
+        </ul></div></details>
+        <details class="dd"><summary>How does he build and orchestrate pipelines?</summary><div class="dd-body"><ul class="stack-list">
+          <li><b>dbt</b><span>Gold-layer models, tests and snapshots; championed adoption across the organization</span></li>
+          <li><b>Airflow</b><span>Created, split and optimized DAGs, with Astronomer Cosmos and plain Python</span></li>
+          <li><b>SQL</b><span>Snowflake, BigQuery and T-SQL</span></li>
+          <li><b>Python</b><span>DAGs, scripts and personal projects</span></li>
+        </ul></div></details>
+        <details class="dd"><summary>Does he work on the platform side?</summary><div class="dd-body"><ul class="stack-list">
+          <li><b>Terraform</b><span>Defined, maintained and audited Snowflake roles, including AI-usage limits</span></li>
+          <li><b>Cloud Build</b><span>Debugged CI/CD pipelines and proposed changes</span></li>
+          <li><b>Cloud Composer</b><span>Upgrades and migrations</span></li>
+          <li><b>Git</b><span>Code review standard for the analytics function; GitLab to GitHub migration</span></li>
+        </ul></div></details>
+        <details class="dd"><summary>Which BI tools does he use?</summary><div class="dd-body"><ul class="stack-list">
+          <li><b>Power BI</b><span>Semantic models, usage analytics, dashboard pruning</span></li>
+        </ul></div></details>
+        <details class="dd"><summary>How does he approach modelling and governance?</summary><div class="dd-body"><ul class="stack-list">
+          <li><b>Dimensional modelling (Kimball)</b><span>Revenue and margin marts, SCD Type 2 with dbt snapshots</span></li>
+          <li><b>Medallion · OBT</b><span>Gold layer and join-free self-service objects</span></li>
+          <li><b>Data contracts</b><span>Handoffs modelled in LeanIX; architecture in Sparx Enterprise Architect</span></li>
+          <li><b>Data quality testing</b><span>Completeness and referential integrity across revenue, risk, pricing and invoicing</span></li>
+          <li><b>Data Vault 2.0</b><span>Studied, not in production</span></li>
+        </ul></div></details>
+      </section>
+
+      <!-- ================= MORE ================= -->
+      <section data-tab="more" id="more">
+        <h2>Side projects</h2>
+        <p class="section-note">Private repositories.</p>
+        <article class="result">
+          <div class="crumb"><span class="fav">⚡</span><span><span class="site">Personal</span>Energy markets</span></div>
+          <h3>Polish balancing energy market analytics</h3>
+          <p>PSE and ENTSO-E data on imbalance settlement (CEN, CKOEB, CEB), the reserve hierarchy (FCR, aFRR, mFRRd, RR) and settlement periods.</p>
+        </article>
+        <article class="result">
+          <div class="crumb"><span class="fav">$</span><span><span class="site">Personal</span>Finance</span></div>
+          <h3>Stock portfolio management system</h3>
+          <p>Alpha Vantage → PostgreSQL → Streamlit.</p>
+        </article>
+        <article class="result">
+          <div class="crumb"><span class="fav">☀</span><span><span class="site">Personal</span>Energy</span></div>
+          <h3>Solar PV monitoring with weather data</h3>
+          <p>Production monitoring joined with weather data.</p>
+        </article>
+
+        <h2>Currently learning</h2>
+        <article class="result">
+          <p>Database internals (row vs columnar storage, memory management), columnar engines (ClickHouse, DuckDB, Snowflake, BigQuery) and distributed systems.</p>
+        </article>
+      </section>
+    </main>
+
+    <!-- ================= KNOWLEDGE PANEL ================= -->
+    <aside class="panel" aria-label="Profile">
+      <div class="avatar" aria-hidden="true">JM</div>
       <h1>Jakub Mroczek</h1>
-      <p>Work portfolio</p>
-    </header>
-
-    <section>
-      <h2>About me</h2>
-      <p>
-        I am a data professional with a strong foundation across the data value chain and a deep curiosity for how information drives business decisions. 
-        I began my career on the business side, gradually transitioning into increasingly technical roles.
-        Throughout my journey, my roles forced me to operate as a Data Analyst, Data Engineer, BI Developer, Data Modeller, and Data Governance Specialist — gaining a comprehensive view of modern data platforms and workflows.
-        My diverse experience, combined with a constant drive to learn and grow, is fueling my progression toward becoming a Full Stack Data Developer, capable of designing and delivering robust, 
-        scalable data solutions across the enterprise.
-      </p>
-    </section>
-
-    <section>
-      <h2>What I am most proud of</h2>
-      <ul>
-        <li>Deployed a data model that serves as a single source of truth for all company's analysts and also led to the discovery of a 20M EUR accounting error (25% of yearly company revenue).</li>
-        <li>Streamlined Business Intelligence solutions, reducing storage usage by 40% and the number of dashboards by 50%.</li>
-        <li>Acted as a bridge between business and data teams to drive data-driven transformation, translating business needs into actionable data initiatives. </li>
-        <li>Championed internal adoption of tools like dbt, facilitated knowledge sharing across teams, and coordinated local and group-level efforts to align strategy and accelerate projects.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Certificates</h2>
-      <ul>
-        <li>TBD</li>
-      </ul>
-    </section>
-
-    <footer>
-      <p>Contact: mroczekjakub97@gmail.com</p>
-    </footer>
+      <div class="sub">Analytics Engineer · Interim Data Platform Team Lead</div>
+      <div class="actions">
+        <a class="chip tonal" href="mailto:mroczekjakub97@gmail.com">✉ Email</a>
+        <a class="chip" href="https://www.linkedin.com/in/jakub-mroczek-jzm/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="chip" href="https://github.com/jakubmro" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <p>Analytics engineer who owns the data layer business decisions are made from: warehouse models, pipelines, data quality and the dashboards people actually use. I don't stop at the number. I bring the recommendation that follows from it.</p>
+      <dl class="facts">
+        <div><dt>Based in:</dt> <dd>Warsaw, Poland</dd></div>
+        <div><dt>Current:</dt> <dd>Axpo Polska, energy trading</dd></div>
+        <div><dt>Leads:</dt> <dd>Data engineering &amp; BI, 8 people</dd></div>
+        <div><dt>Focus:</dt> <dd>Data architecture, governance, data quality</dd></div>
+        <div><dt>Core stack:</dt> <dd>dbt, Snowflake, BigQuery, Airflow, Terraform</dd></div>
+      </dl>
+      <div class="highlights">
+        <div><div class="num">€25M</div><div class="lbl">accounting error surfaced</div></div>
+        <div><div class="num">€3M</div><div class="lbl">margin recovered</div></div>
+        <div><div class="num">€15M</div><div class="lbl">margin at risk quantified (8%)</div></div>
+        <div><div class="num">50%</div><div class="lbl">runtime &amp; storage cut, ~3 TB</div></div>
+        <div><div class="num">20→50%</div><div class="lbl">gold-layer adoption</div></div>
+        <div><div class="num">180→10</div><div class="lbl">backlog to strategic initiatives</div></div>
+      </div>
+      <div class="foot">Polish native · English C2 · German B1</div>
+    </aside>
   </div>
+
+  <footer>Warsaw, Poland · Built as a static page on GitHub Pages</footer>
+
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll('.tabs button');
+      var sections = document.querySelectorAll('section[data-tab]');
+      function show(name) {
+        tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.dataset.show === name)); });
+        sections.forEach(function (s) { s.classList.toggle('hidden', name !== 'all' && s.dataset.tab !== name); });
+      }
+      tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.dataset.show); }); });
+
+      var chips = document.querySelectorAll('.fchip');
+      var groups = document.querySelectorAll('.group[data-group]');
+      chips.forEach(function (c) {
+        c.addEventListener('click', function () {
+          var g = c.dataset.group;
+          chips.forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); });
+          groups.forEach(function (el) { el.classList.toggle('hidden', g !== 'all' && el.dataset.group !== g); });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
- -->
